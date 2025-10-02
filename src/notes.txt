@@ -1,5 +1,4 @@
-shits tough...
-figure out which module relies on another
-formLogic is pretty broken rn.
-figure out the logic for making a form...
-console log the object data when submitted
+style task when created.
+-add class list
+-style based on class
+

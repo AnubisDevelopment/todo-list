@@ -2,7 +2,7 @@ import {domCommands} from './dommy.js'
 import {showForm} from './dommy.js'
 import {showTask} from './dommy.js'
 import {hideForm} from './dommy.js'
-
+import {resetFormFields} from './dommy.js'
 //HAVING TROUBLE RETURNING OBJECT DATA AS PUSHED ARRAY???
 //CHATGPT HELP
 
@@ -17,6 +17,7 @@ class TaskManager{
         submitButton.addEventListener('click', (e) => {
             e.preventDefault()
             this.handleFormSubmission()
+            resetFormFields()
             })
         }
     }
@@ -35,8 +36,6 @@ class TaskManager{
         const formData = new FormData(form)
         //convert to js object
         const objectData = Object.fromEntries(formData.entries())
-        //return Object.fromEntries(formData.entries())
-        
         console.log(objectData)
         return objectData
     }
@@ -50,13 +49,28 @@ class TaskManager{
         let lastElement = this.taskArray[this.taskArray.length-1]
         let htmlBody = document.querySelector("#content")
         let displayData = document.createElement('div')
+        displayData.classList.add('divStyle')
         if (!lastElement) {
             console.log('No tasks to display')
             return
         }
         for (let [key,value]of Object.entries(lastElement)){
+            if (value.length <1){
+                continue;
+            }
+            let keyNode = document.createElement('span')
+            let valueNode = document.createElement('span')
+
+            keyNode.classList.add('keyClass')
+            valueNode.classList.add('valueClass')
+            keyNode.textContent = `${key}: `
+            valueNode.textContent = value
            let p = document.createElement('p')
-           p.textContent = `${key}: ${value}`
+           p.classList.add('pStyle')
+           //p.textContent = `${key}: ${value}`
+           //p.textContent = `${keyNode}: ${valueNode}`
+           p.appendChild(keyNode)
+           p.appendChild(valueNode)
            displayData.appendChild(p)
         }
         htmlBody.appendChild(displayData)

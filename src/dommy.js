@@ -11,14 +11,21 @@ function domCommands(){
     createButton.textContent = 'Create to-do task'
     createButton.addEventListener('click', showForm)
     htmlBody.appendChild(createButton)
-
 } domCommands()
 
+function resetFormFields(){
+    const form = document.querySelector('#formId')
+    form.reset()
+}
 
 function showForm(){
+    // Check if form already exists
+    const existingForm = document.querySelector('#formId')
+    if (existingForm) {
+        console.log('Form already exists')
+        return // Exit the function early
+    }
     const form = document.createElement('form');
-    //form.setAttribute('action', '/submit-data'); // Set the form's action URL
-    //form.setAttribute('method', 'POST');       // Set the form's submission method
     form.setAttribute('id', 'formId')
     //Name
     const label1 = document.createElement('label');
@@ -28,7 +35,7 @@ function showForm(){
     const input1 = document.createElement('input');
     input1.setAttribute('type', 'text');
     input1.setAttribute('id', 'nameInput');
-    input1.setAttribute('name', 'taskName')
+    input1.setAttribute('name', 'Task')
     
 //Description
 const label2 = document.createElement('label');
@@ -38,7 +45,7 @@ const label2 = document.createElement('label');
     const input2 = document.createElement('input');
     input2.setAttribute('type', 'text');
     input2.setAttribute('id', 'descriptionInput');
-    input2.setAttribute('name', 'description')
+    input2.setAttribute('name', 'Description')
 //Due Date
 const label3 = document.createElement('label');
     label3.textContent = 'Enter date:';
@@ -47,7 +54,7 @@ const label3 = document.createElement('label');
     const input3 = document.createElement('input');
     input3.setAttribute('type', 'date');
     input3.setAttribute('id', 'dateInput');
-    input3.setAttribute('name', 'dueDate')
+    input3.setAttribute('name', 'Date due')
 //Priority
 const fieldset = document.createElement('fieldset')
 const legend = document.createElement('legend')
@@ -55,9 +62,9 @@ legend.textContent = 'Select the priority of task:'
 fieldset.appendChild(legend)
 
 const priorityButtons = [
-    {id: 'low', value: 'low', label: 'Low'},
-    {id: 'medium', value: 'medium', label: 'Medium'},
-    {id: 'high', value: 'high', label: 'High'}
+    {id: 'low', value: 'Low', label: 'Low'},
+    {id: 'medium', value: 'Medium', label: 'Medium'},
+    {id: 'high', value: 'High', label: 'High'}
 ] 
 
 priorityButtons.forEach(button =>{
@@ -67,7 +74,7 @@ priorityButtons.forEach(button =>{
     radioInput.setAttribute('type', 'radio')
     radioInput.setAttribute('id', button.id)
     radioInput.setAttribute('value', button.value)
-    radioInput.setAttribute('name', 'priority');
+    radioInput.setAttribute('name', 'Priority');
 
     const label4 = document.createElement('label')
     label4.setAttribute('for', button.id)
@@ -86,7 +93,7 @@ priorityButtons.forEach(button =>{
     const input5 = document.createElement('input');
     input5.setAttribute('type', 'text');
     input5.setAttribute('id', 'noteInput');
-    input5.setAttribute('name', 'notes')
+    input5.setAttribute('name', 'Notes')
 //submitButton
     const submitButton = document.createElement('button');
     submitButton.setAttribute('type', 'submit');
@@ -106,7 +113,6 @@ priorityButtons.forEach(button =>{
     form.appendChild(submitButton);
     
     htmlBody.appendChild(form)
-    //taskManager = new TaskManager()
     if (!taskManager) {
         taskManager = new TaskManager();
     } else {
@@ -132,4 +138,5 @@ export {domCommands}
 export {showForm}
 export {showTask}
 export {hideForm}
+export {resetFormFields}
 export const greeting = 'Hello, Odinite';
